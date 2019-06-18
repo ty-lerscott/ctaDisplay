@@ -1,5 +1,5 @@
 const graphql  = require("graphql");
-const {object} = require('./baseTypes');
+const {object} = require('./baseFields');
 const Schemas  = require("./Schemas");
 
 const {GraphQLSchema} = graphql;
