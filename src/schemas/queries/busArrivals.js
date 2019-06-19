@@ -4,9 +4,8 @@ const timestamp = require('../../utils/timestamp');
 
 const getBusArrivals = async args => {
 	const {status, data} = await axios.get(CTAENDPOINTS.getBusArrivals(args));
-	console.warn(args, JSON.stringify(data));
 
-    if (status === 200) {
+	if (status === 200) {
         return data['bustime-response'].prd.map(bus => ({
 			id: bus.vid,
 			zone: bus.zone,
@@ -16,8 +15,8 @@ const getBusArrivals = async args => {
 			isDelayed: !!bus.dly,
 			destination: bus.des,
 			predictionType: bus.typ === 'A' ? 'arrival' : 'departure' ,
-			distanceFromStop: Number(bus.dstp),
-			timeUntilArrival: bus.prdctdn,
+			distanceFromStop: Number(bus.dstp) || 0,
+			timeUntilArrival: Number(bus.prdctdn) || 0,
 			predictedArrivalTime: timestamp(bus.prdtm)
         })).filter(({direction}) => {
             switch (args.direction) {
