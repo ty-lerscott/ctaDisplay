@@ -33,18 +33,27 @@ app
     .use(morgan(':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] :response-time ms'))
     .use('/playground', expressPlayground({ endpoint: "/graphql" }))
     .use('/test', (req,res) => {
-        axios.get(CTAENDPOINTS.getTrainArrivals({
-            stationId: 40540,
-            // routeCode: 'red'
-        })).then(({
-            data:{
-                ctatt: {
-                    tmst: lastUpdated,
-                    eta: trains
-                }
+        axios.get(CTAENDPOINTS.getBusStop({
+            route: 36,
+            direction: 'Southbound'
+        })).then(({data}) => {
+            const {stops} = data['bustime-response'];
+            const ourStop = stops.find(stop => (/Broadway\W+Sunnyside/i).test(stop.stpnm));
+
+            if (ourStop) {
+                axios.get(CTAENDPOINTS.getBusArrivals({
+                    stop: ourStop.stpid,
+                    route: 36
+                })).then(({data}) => {
+                    const predictions = data['bustime-response'].prd;
+
+                    console.warn(predictions);
+                    res.json(predictions);
+                })
+            } else {
+                res.sendStatus(404);
             }
-        }, err) => {
-            res.json(trains.filter(train => directions.isSouthBound({mode: 'train', direction: train.trDr})));
+
         });
     })
     .use("/graphql",

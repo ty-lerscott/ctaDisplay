@@ -12,11 +12,21 @@ const getTrainArrivals = async args => {
             route: train.rt,
             arrivalTime: train.arrT,
             destination: train.destNm,
+            direction: Number(train.trDr),
             hasAlerts: Number(train.isFlt) === 1,
             isDelayed: Number(train.isDly) === 1,
             isPrediction: Number(train.isSch) === 1,
             isApproaching: Number(train.isApp) === 1
-        }));
+        })).filter(({direction}) => {
+            switch (args.direction) {
+                case 'north':
+                    return direction === 1;
+                case 'south':
+                    return direction === 5;
+                default:
+                    return true;
+            }
+        });
     }
     // else there's an error with the request
 
@@ -26,41 +36,3 @@ const getTrainArrivals = async args => {
 module.exports = {
     getTrainArrivals
 };
-
-
-
-
-
-
-// const { firestore } = require("../../../config/firebase.config");
-
-// const getAllergy = async id => {
-//   const request = await firestore
-//     .collection("allergies")
-//     .doc(id)
-//     .get();
-
-//   return {
-//     id,
-//     ...request.data()
-//   };
-// };
-
-// const getAllergies = async args => {
-//   const response = await firestore.collection("allergies").get();
-//   let allergiesArr = [];
-
-//   for (let allergy of response.docs) {
-//     allergiesArr.push({
-//       id: allergy.id,
-//       ...allergy.data()
-//     });
-//   }
-
-//   return allergiesArr;
-// };
-
-// module.exports = {
-//   getAllergy,
-//   getAllergies
-// };

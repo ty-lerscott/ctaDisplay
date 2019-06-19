@@ -8,7 +8,7 @@ module.exports = {
 		type: FIELDS.list(TrainArrivals.type),
 		args: {
             stationId: TrainArrivals.defaultFields.id,
-            direction: TrainArrivals.defaultFields.string
+            direction: FIELDS.string
 		},
 		resolve: async (parent, args) => {
 			return await getTrainArrivals(args);

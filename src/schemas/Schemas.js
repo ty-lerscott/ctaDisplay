@@ -3,7 +3,8 @@ module.exports = {
 	// ...require('./resolvers/tag/tag'),
 	// ...require('./resolvers/user/user'),
 	// ...require('./resolvers/recipe/recipe'),
-	...require('./resolvers/trainArrivals'),
+    ...require('./resolvers/busStop'),
+    ...require('./resolvers/trainArrivals'),
 	// ...require('./resolvers/mealType/mealType'),
 	// ...require('./resolvers/mealPrep/mealPrep'),
 	// ...require('./resolvers/ingredient/ingredient')
