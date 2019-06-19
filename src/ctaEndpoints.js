@@ -11,9 +11,9 @@ const getBusStop = ({
 }) => `http://www.ctabustracker.com/bustime/api/v2/getstops?format=json&key=${process.env.API_KEY_BUS}&rt=${routeNumber}&dir=${direction}`;
 
 const getBusArrivals = ({
-    stop,
-    route
-}) => `http://www.ctabustracker.com/bustime/api/v2/getpredictions?format=json&key=${process.env.API_KEY_BUS}&stpid=${stop}&rt=${route}`;
+    stopId,
+    routeNumber
+}) => `http://www.ctabustracker.com/bustime/api/v2/getpredictions?format=json&key=${process.env.API_KEY_BUS}&stpid=${stopId}&rt=${routeNumber}`;
 
 module.exports = {
     getBusStop,
