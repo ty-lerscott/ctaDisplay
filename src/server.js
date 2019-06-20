@@ -9,16 +9,14 @@ const schema = require("./schemas/RootQuery");
 const compression = require('compression');
 const cors = require('cors');
 const morgan = require('morgan');
+const path = require('path');
 
 dotenv.config();
 
 const app = express();
 
-const axios = require('axios');
-const CTAENDPOINTS = require('./ctaEndpoints');
-
-const directions = require('./utils/directions');
-
+const createHtml = require('./utils/createHtml');
+console.warn(path.resolve(__dirname, `../../dist/${process.env.VERSION_NUMBER}/client`))
 app
     .use(cors({
         credentials: true,
@@ -32,30 +30,6 @@ app
     .use(compression())
     .use(morgan(':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] :response-time ms'))
     .use('/playground', expressPlayground({ endpoint: "/graphql" }))
-    .use('/test', (req,res) => {
-        axios.get(CTAENDPOINTS.getBusStop({
-            route: 36,
-            direction: 'Southbound'
-        })).then(({data}) => {
-            const {stops} = data['bustime-response'];
-            const ourStop = stops.find(stop => (/Broadway\W+Sunnyside/i).test(stop.stpnm));
-
-            if (ourStop) {
-                axios.get(CTAENDPOINTS.getBusArrivals({
-                    stop: ourStop.stpid,
-                    route: 36
-                })).then(({data}) => {
-                    const predictions = data['bustime-response'].prd;
-
-                    console.warn(predictions);
-                    res.json(predictions);
-                })
-            } else {
-                res.sendStatus(404);
-            }
-
-        });
-    })
     .use("/graphql",
         bodyParser.json(),
         bodyParser.urlencoded({extended:true}),
@@ -67,6 +41,8 @@ app
             }
         }
     ))
+    .use('*/js', express.static(path.resolve(__dirname, `../../dist/${process.env.VERSION_NUMBER}/client`)))
+	.use(createHtml)
     .listen(process.env.HTTP_PORT, () =>
-        console.log(`Now browse to localhost:${process.env.HTTP_PORT}/graphql`)
+        console.log(`Now browse to localhost:${process.env.HTTP_PORT}`)
     );

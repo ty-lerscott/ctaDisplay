@@ -2,7 +2,8 @@ const FIELDS = require('../baseFields');
 
 const defaultFields = {
     id: FIELDS.id,
-	zone: FIELDS.string,
+    zone: FIELDS.string,
+    error: FIELDS.string,
 	stopName: FIELDS.string,
     busNumber: FIELDS.string,
     direction: FIELDS.string,

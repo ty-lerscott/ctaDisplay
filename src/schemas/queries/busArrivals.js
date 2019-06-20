@@ -3,10 +3,11 @@ const CTAENDPOINTS = require('../../ctaEndpoints');
 const timestamp = require('../../utils/timestamp');
 
 const getBusArrivals = async args => {
-	const {status, data} = await axios.get(CTAENDPOINTS.getBusArrivals(args));
+    const {status, data} = await axios.get(CTAENDPOINTS.getBusArrivals(args));
+    const busses = data['bustime-response'];
 
-	if (status === 200) {
-        return data['bustime-response'].prd.map(bus => ({
+	if (status === 200 && !busses.error) {
+        return busses.prd.map(bus => ({
 			id: bus.vid,
 			zone: bus.zone,
 			busNumber: bus.rt,
@@ -30,8 +31,9 @@ const getBusArrivals = async args => {
         });
     }
     // else there's an error with the request
-
-    return [];
+    return [{
+        error: busses.error[1].msg
+    }];
 };
 
 module.exports = {
