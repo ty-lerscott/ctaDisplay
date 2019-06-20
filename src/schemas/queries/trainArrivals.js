@@ -2,13 +2,12 @@ const axios = require('axios');
 
 const CTAENDPOINTS = require('../../ctaEndpoints');
 
-const directions = require('../../utils/directions');
-
 const getTrainArrivals = async args => {
     const {status, data} = await axios.get(CTAENDPOINTS.getTrainArrivals(args));
     if (status === 200) {
         return data.ctatt.eta.map(train => ({
             id: train.rn,
+            type: 'train',
             route: train.rt,
             arrivalTime: train.arrT,
             destination: train.destNm,

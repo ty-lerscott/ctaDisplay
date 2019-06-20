@@ -2,6 +2,7 @@ const FIELDS = require('../baseFields');
 
 const defaultFields = {
     id: FIELDS.id,
+    type: FIELDS.string,
     route: FIELDS.string,
     direction: FIELDS.string,
     hasAlerts: FIELDS.boolean,

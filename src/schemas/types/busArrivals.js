@@ -1,7 +1,8 @@
 const FIELDS = require('../baseFields');
 
 const defaultFields = {
-    id: FIELDS.id,
+	id: FIELDS.id,
+	type: FIELDS.string,
     zone: FIELDS.string,
     error: FIELDS.string,
 	stopName: FIELDS.string,
