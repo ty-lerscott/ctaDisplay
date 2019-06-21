@@ -7,11 +7,10 @@ const getTrainArrivals = async args => {
     if (status === 200) {
         return data.ctatt.eta.map(train => ({
             id: train.rn,
-            type: 'train',
             route: train.rt,
-            arrivalTime: train.arrT,
             destination: train.destNm,
             direction: Number(train.trDr),
+            predictedArrivalTime: train.arrT,
             hasAlerts: Number(train.isFlt) === 1,
             isDelayed: Number(train.isDly) === 1,
             isPrediction: Number(train.isSch) === 1,
@@ -29,7 +28,9 @@ const getTrainArrivals = async args => {
     }
     // else there's an error with the request
 
-    return [];
+    return [{
+        error: data.ctatt.error[0].msg
+    }];
 };
 
 module.exports = {

@@ -8,10 +8,9 @@ const getBusArrivals = async args => {
 
 	if (status === 200 && !busses.error) {
         return busses.prd.map(bus => ({
-            type: 'bus',
 			id: bus.vid,
+			route: bus.rt,
             zone: bus.zone,
-			busNumber: bus.rt,
 			stopName: bus.stpnm,
 			direction: bus.rtdir,
 			isDelayed: !!bus.dly,
@@ -33,7 +32,7 @@ const getBusArrivals = async args => {
     }
     // else there's an error with the request
     return [{
-        error: busses.error[1].msg
+        error: busses.error[0].msg
     }];
 };
 

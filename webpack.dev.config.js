@@ -3,6 +3,7 @@ const path = require('path');
 const dotenv = require('dotenv');
 const webpack = require('webpack');
 const Dotenv = require('dotenv-webpack');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 dotenv.config();
 
@@ -46,6 +47,10 @@ module.exports = {
 	},
 	plugins: [
 		new Dotenv(),
-		new webpack.optimize.OccurrenceOrderPlugin()
+		new webpack.optimize.OccurrenceOrderPlugin(),
+		new BundleAnalyzerPlugin({
+			analyzerMode: 'static',
+			openAnalyzer: false
+		})
 	]
 };

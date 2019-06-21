@@ -2,15 +2,15 @@ const FIELDS = require('../baseFields');
 
 const defaultFields = {
     id: FIELDS.id,
-    type: FIELDS.string,
     route: FIELDS.string,
+    error: FIELDS.string,
     direction: FIELDS.string,
     hasAlerts: FIELDS.boolean,
     isDelayed: FIELDS.boolean,
     destination: FIELDS.string,
-    arrivalTime: FIELDS.string,
     isPrediction: FIELDS.boolean,
-    isApproaching: FIELDS.boolean
+    isApproaching: FIELDS.boolean,
+    predictedArrivalTime: FIELDS.string
 };
 
 const TrainArrivalsType = FIELDS.object({
