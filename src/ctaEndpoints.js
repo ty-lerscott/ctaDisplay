@@ -15,8 +15,12 @@ const getBusArrivals = ({
     routeNumber
 }) => `http://www.ctabustracker.com/bustime/api/v2/getpredictions?format=json&key=${process.env.API_KEY_BUS}&stpid=${stopId}&rt=${routeNumber}`;
 
+
+const getServiceAlerts = () => 'http://lapi.transitchicago.com/api/1.0/alerts.aspx?outputType=JSON';
+
 module.exports = {
     getBusStop,
     getBusArrivals,
-    getTrainArrivals
+    getTrainArrivals,
+    getServiceAlerts
 }

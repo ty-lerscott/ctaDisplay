@@ -1,4 +1,3 @@
-
 const express = require("express");
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
@@ -16,7 +15,7 @@ dotenv.config();
 const app = express();
 
 const createHtml = require('./utils/createHtml');
-console.warn(path.resolve(__dirname, `../../dist/${process.env.VERSION_NUMBER}/client`))
+
 app
     .use(cors({
         credentials: true,

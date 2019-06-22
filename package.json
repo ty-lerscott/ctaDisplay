@@ -21,6 +21,7 @@
     "dotenv-webpack": "^1.7.0",
     "express": "^4.16.4",
     "express-graphql": "^0.7.1",
+    "fs": "0.0.1-security",
     "graphql": "^14.1.1",
     "graphql-bigint": "^1.0.0",
     "graphql-playground-middleware-express": "^1.7.12",
