@@ -41,6 +41,9 @@ app
         }
     ))
     .use('*/js', express.static(path.resolve(__dirname, `../../dist/${process.env.VERSION_NUMBER}/client`)))
+    .use('/report', (req,res) => {
+        res.sendFile(path.resolve(__dirname, `../../dist/${process.env.VERSION_NUMBER}/client/report.html`));
+    })
 	.use(createHtml)
     .listen(process.env.HTTP_PORT, () =>
         console.log(`Now browse to localhost:${process.env.HTTP_PORT}`)
