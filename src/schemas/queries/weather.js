@@ -12,8 +12,8 @@ const getWeather = async args => {
 	return {
 		...((status === 200) && {
 			sunset: sys.sunset*1000,
-			sunrise: sys.sunrise*100,
 			humidity: main.humidity,
+			sunrise: sys.sunrise*1000,
 			low: Math.floor(convert(main.temp_min).from('K').to('F')),
 			high: Math.floor(convert(main.temp_max).from('K').to('F')),
 			temperature: Math.floor(convert(main.temp).from('K').to('F')),

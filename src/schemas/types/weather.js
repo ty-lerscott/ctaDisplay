@@ -3,10 +3,10 @@ const FIELDS = require('../baseFields');
 const defaultFields = {
 	low: FIELDS.integer,
 	high: FIELDS.integer,
-	sunset: FIELDS.string,
-	sunrise: FIELDS.string,
 	humidity: FIELDS.integer,
 	condition: FIELDS.string,
+	sunset: FIELDS.biginteger,
+	sunrise: FIELDS.biginteger,
 	temperature: FIELDS.integer
 };
 
