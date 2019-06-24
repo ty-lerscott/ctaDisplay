@@ -17,7 +17,7 @@ const getWeather = async args => {
 			low: Math.floor(convert(main.temp_min).from('K').to('F')),
 			high: Math.floor(convert(main.temp_max).from('K').to('F')),
 			temperature: Math.floor(convert(main.temp).from('K').to('F')),
-			condition: Array.isArray(weather) ? weather[0].main.toLowerCase() : weather.main.toLowerCase()
+			condition: weather.map(({main}) => main).sort().join('-').toLowerCase()
 		})
 	}
 };
