@@ -1,9 +1,9 @@
 const axios = require('axios');
 
-const CTAENDPOINTS = require('../../ctaEndpoints');
+const ENDPOINTS = require('../../endpoints');
 
 const getTrainArrivals = async args => {
-    const {status, data} = await axios.get(CTAENDPOINTS.getTrainArrivals(args));
+    const {status, data} = await axios.get(ENDPOINTS.getTrainArrivals(args));
     if (status === 200) {
         return data.ctatt.eta.map(train => ({
             id: train.rn,

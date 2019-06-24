@@ -4,16 +4,17 @@ const cookieParser = require('cookie-parser');
 const graphqlHTTP = require("express-graphql");
 const dotenv = require("dotenv");
 const expressPlayground = require("graphql-playground-middleware-express").default;
-const schema = require("./schemas/RootQuery");
 const compression = require('compression');
 const cors = require('cors');
 const morgan = require('morgan');
 const path = require('path');
+const axios = require('axios');
 
 dotenv.config();
 
 const app = express();
 
+const schema = require("./schemas/RootQuery");
 const createHtml = require('./utils/createHtml');
 
 app
@@ -40,6 +41,14 @@ app
             }
         }
     ))
+    .get('/weather', (req, res, next) => {
+        axios.get('http://api.openweathermap.org/data/2.5/weather?appid=dfeb839e1c467490ce6c5bc44c22de33&zip=60657').then(({data}) => {
+            console.warn('this is the data', data);
+        }).catch((err) => {
+            console.warn('this is the error', err);
+        })
+        res.send('hello');
+    })
     .use('*/js', express.static(path.resolve(__dirname, `../../dist/${process.env.VERSION_NUMBER}/client`)))
     .use('/report', (req,res) => {
         res.sendFile(path.resolve(__dirname, `../../dist/${process.env.VERSION_NUMBER}/client/report.html`));

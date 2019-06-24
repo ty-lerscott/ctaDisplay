@@ -1,11 +1,11 @@
 const axios = require('axios');
 
-const CTAENDPOINTS = require('../../ctaEndpoints');
+const ENDPOINTS = require('../../endpoints');
 
 const getBusStop = async args => {
     const direction = `${args.direction.charAt(0).toUpperCase()}${args.direction.slice(1).toLowerCase()}bound`;
 
-    const {status, data} = await axios.get(CTAENDPOINTS.getBusStop({
+    const {status, data} = await axios.get(ENDPOINTS.getBusStop({
         direction,
         routeNumber: args.routeNumber
     }));

@@ -1,9 +1,9 @@
 const axios = require('axios');
-const CTAENDPOINTS = require('../../ctaEndpoints');
+const ENDPOINTS = require('../../endpoints');
 const timestamp = require('../../utils/timestamp');
 
 const getBusArrivals = async args => {
-    const {status, data} = await axios.get(CTAENDPOINTS.getBusArrivals(args));
+    const {status, data} = await axios.get(ENDPOINTS.getBusArrivals(args));
     const busses = data['bustime-response'];
 
 	if (status === 200 && !busses.error) {

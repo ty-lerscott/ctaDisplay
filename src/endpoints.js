@@ -18,8 +18,11 @@ const getBusArrivals = ({
 
 const getServiceAlerts = () => 'http://lapi.transitchicago.com/api/1.0/alerts.aspx?outputType=JSON';
 
+const getWeather = () => `http://api.openweathermap.org/data/2.5/weather?appid=${process.env.API_KEY_WEATHER}&zip=60657`;
+
 module.exports = {
     getBusStop,
+    getWeather,
     getBusArrivals,
     getTrainArrivals,
     getServiceAlerts

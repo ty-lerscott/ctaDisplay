@@ -1,9 +1,9 @@
 const axios = require('axios');
 
-const CTAENDPOINTS = require('../../ctaEndpoints');
+const ENDPOINTS = require('../../endpoints');
 
 const getServiceAlerts = async args => {
-    const {status, data} = await axios.get(CTAENDPOINTS.getServiceAlerts());
+    const {status, data} = await axios.get(ENDPOINTS.getServiceAlerts());
     if (status === 200) {
         return data.CTAAlerts.Alert.map(alert => ({
             id: alert.AlertId,
