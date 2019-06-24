@@ -15,12 +15,14 @@ const getBusArrivals = ({
     routeNumber
 }) => `http://www.ctabustracker.com/bustime/api/v2/getpredictions?format=json&key=${process.env.API_KEY_BUS}&stpid=${stopId}&rt=${routeNumber}`;
 
-
 const getServiceAlerts = () => 'http://lapi.transitchicago.com/api/1.0/alerts.aspx?outputType=JSON';
 
-const getWeather = () => `http://api.openweathermap.org/data/2.5/weather?appid=${process.env.API_KEY_WEATHER}&zip=60640`;
+const getWeather = () => `http://api.openweathermap.org/data/2.5/weather?appid=${process.env.API_KEY_WEATHER}&zip=90001`;
+
+const getEvents = () => `https://api.seatgeek.com/2/events?venue.id=11&client_id=${process.env.API_KEY_SEAT_GEEK}`;
 
 module.exports = {
+    getEvents,
     getBusStop,
     getWeather,
     getBusArrivals,

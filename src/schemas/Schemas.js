@@ -1,6 +1,7 @@
 module.exports = {
 	// resolvers
 	...require('./resolvers/rate'),
+	...require('./resolvers/events'),
 	...require('./resolvers/busStop'),
 	...require('./resolvers/weather'),
 	...require('./resolvers/busArrivals'),
