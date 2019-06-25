@@ -21,10 +21,13 @@ const getWeather = () => `http://api.openweathermap.org/data/2.5/weather?appid=$
 
 const getEvents = () => `https://api.seatgeek.com/2/events?venue.id=11&client_id=${process.env.API_KEY_SEAT_GEEK}`;
 
+const getRandomPhoto = () => `https://api.unsplash.com/photos/random/?featured=true&orientation=landscape&client_id=${process.env.API_KEY_UNSPLASH}`;
+
 module.exports = {
     getEvents,
     getBusStop,
     getWeather,
+    getRandomPhoto,
     getBusArrivals,
     getTrainArrivals,
     getServiceAlerts

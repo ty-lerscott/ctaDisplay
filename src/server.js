@@ -1,6 +1,5 @@
 const express = require("express");
 const bodyParser = require('body-parser');
-const cookieParser = require('cookie-parser');
 const graphqlHTTP = require("express-graphql");
 const dotenv = require("dotenv");
 const expressPlayground = require("graphql-playground-middleware-express").default;
@@ -25,14 +24,12 @@ app
     }))
     .use(bodyParser.json())
     .use(bodyParser.urlencoded({extended:true}))
-    .use(cookieParser())
     .use(compression())
     .use(morgan(':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] :response-time ms'))
     .use('/playground', expressPlayground({ endpoint: "/graphql" }))
     .use("/graphql",
         bodyParser.json(),
         bodyParser.urlencoded({extended:true}),
-        cookieParser(),
         graphqlHTTP((req, res) => {
             return {
                 schema,
