@@ -1,27 +1,22 @@
 const axios = require('axios');
 const ENDPOINTS = require('../endpoints');
 const {database} = require('../../firebase/config');
-const timestamp = require('../utils/timestamp');
 
-const getServiceAlerts = async ({
-	stopId=5350,
-	routeNumber=36,
-	direction='south'
-} = {}) => {
+const getServiceAlerts = async () => {
 	try {
 		const {status, data} = await axios.get(ENDPOINTS.getServiceAlerts());
 
-		const ref = database.ref('serviceAlerts');
+		const ref = database.ref('alerts');
 
 		if (status === 200 && !!data.CTAAlerts.Alert.length) {
-			ref.set({
-				alerts: data.CTAAlerts.Alert.map(alert => ({
+			ref.set(
+				data.CTAAlerts.Alert.map(alert => ({
 					id: alert.AlertId,
 					description: alert.ShortDescription,
 					severity: Number(alert.SeverityScore),
-					impactedRoutes: Array.isArray(alert.ImpactedService.Service) ? alert.ImpactedService.Service : [alert.ImpactedService.Service]
-				}));
-			})
+					impactedRoutes: (Array.isArray(alert.ImpactedService.Service) ? alert.ImpactedService.Service : [alert.ImpactedService.Service]).map(({ServiceId}) => ServiceId)
+				}))
+			)
 			console.warn('updated service alerts database')
 		}
 	} catch (err) {

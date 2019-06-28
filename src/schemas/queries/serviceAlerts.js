@@ -1,24 +1,21 @@
-const axios = require('axios');
+const {database} = require('../../../firebase/config');
 
-const ENDPOINTS = require('../../endpoints');
+function getServiceAlertsHelper() {
+    return new Promise((resolve, reject) => {
+        var alertsRef = database.ref("alerts");
+
+        alertsRef.on('value', (data) => {
+            resolve(data.val());
+        }, (error) => {
+            reject(error.code);
+        });
+    });
+}
 
 const getServiceAlerts = async args => {
-    const {status, data} = await axios.get(ENDPOINTS.getServiceAlerts());
-    if (status === 200) {
-        return data.CTAAlerts.Alert.map(alert => ({
-            id: alert.AlertId,
-            description: alert.ShortDescription,
-            severity: Number(alert.SeverityScore),
-            impactedRoutes: Array.isArray(alert.ImpactedService.Service) ? alert.ImpactedService.Service : [alert.ImpactedService.Service]
-        }));
-    }
+    const data = await getServiceAlertsHelper();
 
-    return [{}]
-    // else there's an error with the request
-
-    // return [{
-    //     error: data.ctatt.error[0].msg
-    // }];
+    return data;
 };
 
 module.exports = {

@@ -23,13 +23,15 @@ const executeWeather      = require('./polling/weather');
 const executeUnsplash     = require('./polling/unsplash');
 const executeSeatGeek     = require('./polling/seatGeek');
 const executeBusArrivals  = require('./polling/busArrivals');
+const executeServiceAlerts= require('./polling/serviceAlerts');
 const executeTrainArrivals= require('./polling/trainArrivals');
 
-executeUnsplash();
-executeSeatGeek();
-executeBusArrivals();
-executeTrainArrivals();
-executeWeather();
+// executeWeather();
+// executeUnsplash();
+// executeSeatGeek();
+// executeBusArrivals();
+// executeTrainArrivals();
+executeServiceAlerts();
 
 app
     .use(cors({

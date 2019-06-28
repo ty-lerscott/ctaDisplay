@@ -10,7 +10,7 @@ function getTrainArrivalsHelper() {
             reject(error.code);
         });
     });
-  }
+}
 
 const getTrainArrivals = async ({
     stationId,

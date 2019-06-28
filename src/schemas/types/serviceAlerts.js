@@ -4,8 +4,8 @@ const ImpactedRoute = require('./impactedRoute');
 
 const defaultFields = {
 	id: FIELDS.id,
-	description: FIELDS.string,
-	severity: FIELDS.integer
+	severity: FIELDS.integer,
+	description: FIELDS.string
 };
 
 const ServiceAlerts = FIELDS.object({
@@ -14,10 +14,8 @@ const ServiceAlerts = FIELDS.object({
 	fields: () => ({
 		...defaultFields,
 		impactedRoutes: {
-			type: FIELDS.list(ImpactedRoute.type),
-			resolve: ({impactedRoutes}, args) => {
-				return impactedRoutes.map(({ServiceId: id}) => ({id}))
-			}
+			type: FIELDS.stringArray,
+			resolve: ({impactedRoutes}, args) => impactedRoutes
 		}
 	})
 });
