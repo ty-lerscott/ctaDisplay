@@ -1,36 +1,33 @@
-const axios = require('axios');
+const {database} = require('../../../firebase/config');
 
-const ENDPOINTS = require('../../endpoints');
+function getTrainArrivalsHelper() {
+    return new Promise((resolve, reject) => {
+        var trainRef = database.ref("arrivals/trains");
 
-const getTrainArrivals = async args => {
-    const {status, data} = await axios.get(ENDPOINTS.getTrainArrivals(args));
-    if (status === 200) {
-        return data.ctatt.eta.map(train => ({
-            id: train.rn,
-            route: train.rt,
-            destination: train.destNm,
-            direction: Number(train.trDr),
-            predictedArrivalTime: train.arrT,
-            hasAlerts: Number(train.isFlt) === 1,
-            isDelayed: Number(train.isDly) === 1,
-            isPrediction: Number(train.isSch) === 1,
-            isApproaching: Number(train.isApp) === 1
-        })).filter(({direction}) => {
-            switch (args.direction) {
-                case 'north':
-                    return direction === 1;
-                case 'south':
-                    return direction === 5;
-                default:
-                    return true;
-            }
+        trainRef.on('value', (data) => {
+            resolve(data.val());
+        }, (error) => {
+            reject(error.code);
         });
-    }
-    // else there's an error with the request
+    });
+  }
 
-    return [{
-        error: data.ctatt.error[0].msg
-    }];
+const getTrainArrivals = async ({
+    stationId,
+    direction
+}) => {
+    const data = await getTrainArrivalsHelper();
+
+    return data[stationId].filter(({direction: trainDir}) => {
+        switch (direction) {
+            case 'north':
+                return trainDir === 1;
+            case 'south':
+                return trainDir === 5;
+            default:
+                return true;
+        }
+    });
 };
 
 module.exports = {
