@@ -1,39 +1,21 @@
-const axios = require('axios');
-const ENDPOINTS = require('../../endpoints');
-const timestamp = require('../../utils/timestamp');
+const {database} = require('../../../firebase/config');
+
+function getBusArrivalsHelper() {
+    return new Promise((resolve, reject) => {
+        var busRef = database.ref("arrivals/busses");
+
+        busRef.on('value', (data) => {
+            resolve(data.val());
+        }, (error) => {
+            reject(error.code);
+        });
+    });
+  }
 
 const getBusArrivals = async args => {
-    const {status, data} = await axios.get(ENDPOINTS.getBusArrivals(args));
-    const busses = data['bustime-response'];
+    const data = await getBusArrivalsHelper();
 
-	if (status === 200 && !busses.error) {
-        return busses.prd.map(bus => ({
-			id: bus.vid,
-			route: bus.rt,
-            zone: bus.zone,
-			stopName: bus.stpnm,
-			direction: bus.rtdir,
-			isDelayed: !!bus.dly,
-			destination: bus.des,
-			predictionType: bus.typ === 'A' ? 'arrival' : 'departure' ,
-			distanceFromStop: Number(bus.dstp) || 0,
-			timeUntilArrival: Number(bus.prdctdn) || 0,
-			predictedArrivalTime: timestamp(bus.prdtm)
-        })).filter(({direction}) => {
-            switch (args.direction) {
-                case 'north':
-                    return direction === 1;
-                case 'south':
-                    return direction === 5;
-                default:
-                    return true;
-            }
-        });
-    }
-    // else there's an error with the request
-    return [{
-        error: busses.error[0].msg
-    }];
+    return data[args.stopId].filter(({route}) => Number(route) === args.route);
 };
 
 module.exports = {

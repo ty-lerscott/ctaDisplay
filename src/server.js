@@ -15,6 +15,22 @@ const app = express();
 const schema = require("./schemas/RootQuery");
 const createHtml = require('./utils/createHtml');
 
+const {database} = require('../firebase/config');
+
+var temp = 0;
+
+const executeWeather      = require('./polling/weather');
+const executeUnsplash     = require('./polling/unsplash');
+const executeSeatGeek     = require('./polling/seatGeek');
+const executeBusArrivals  = require('./polling/busArrivals');
+const executeTrainArrivals= require('./polling/trainArrivals');
+
+executeUnsplash();
+executeSeatGeek();
+executeBusArrivals();
+executeTrainArrivals();
+executeWeather();
+
 app
     .use(cors({
         credentials: true,
@@ -46,3 +62,5 @@ app
     .listen(process.env.HTTP_PORT, () =>
         console.log(`Now browse to localhost:${process.env.HTTP_PORT}`)
     );
+
+
