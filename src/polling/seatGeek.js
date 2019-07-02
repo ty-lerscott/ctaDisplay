@@ -9,14 +9,14 @@ const getEvents = async () => {
 		const ref = database.ref('events');
 
 		if (status === 200 && !!events.length && !error) {
-			ref.set({
-				upcoming: events.map(({id, taxonomies, ...rest}) => ({
+			ref.set(
+				events.map(({id, taxonomies, ...rest}) => ({
 					id,
 					isConcert: taxonomies.some(({name}) => name === 'concert'),
 					isSport: taxonomies.some(({name}) => name === 'sports'),
 					time: rest.datetime_local
 				}))
-			})
+			)
 			console.warn('updated events database')
 		}
 	} catch (err) {

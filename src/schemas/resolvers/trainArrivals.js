@@ -7,7 +7,7 @@ module.exports = {
 	trainArrivals: {
 		type: FIELDS.list(TrainArrivals.type),
 		args: {
-            stationId: TrainArrivals.defaultFields.id,
+            stationId: FIELDS.integer,
             direction: FIELDS.string
 		},
 		resolve: async (parent, args) => {

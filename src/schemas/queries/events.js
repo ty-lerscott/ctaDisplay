@@ -1,17 +1,21 @@
-const axios = require('axios');
-const ENDPOINTS = require('../../endpoints');
+const {database} = require('../../../firebase/config');
+
+function getEventsHelper() {
+    return new Promise((resolve, reject) => {
+        var eventsRef = database.ref("events");
+
+        eventsRef.on('value', (data) => {
+            resolve(data.val());
+        }, (error) => {
+            reject(error.code);
+        });
+    });
+  }
 
 const getEvents = async args => {
-	const {status, data: {events}} = await axios.get(ENDPOINTS.getEvents(args));
+    const data = await getEventsHelper();
 
-	return [
-		...((status === 200) && events.map(({id, taxonomies, ...rest}) => ({
-			id,
-			isConcert: taxonomies.some(({name}) => name === 'concert'),
-			isSport: taxonomies.some(({name}) => name === 'sports'),
-			time: rest.datetime_local
-		})))
-	]
+    return data;
 };
 
 module.exports = {

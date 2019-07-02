@@ -17,8 +17,6 @@ const createHtml = require('./utils/createHtml');
 
 const {database} = require('../firebase/config');
 
-var temp = 0;
-
 const executeWeather      = require('./polling/weather');
 const executeUnsplash     = require('./polling/unsplash');
 const executeSeatGeek     = require('./polling/seatGeek');
@@ -26,11 +24,11 @@ const executeBusArrivals  = require('./polling/busArrivals');
 const executeServiceAlerts= require('./polling/serviceAlerts');
 const executeTrainArrivals= require('./polling/trainArrivals');
 
-// executeWeather();
-// executeUnsplash();
-// executeSeatGeek();
-// executeBusArrivals();
-// executeTrainArrivals();
+executeWeather();
+executeUnsplash();
+executeSeatGeek();
+executeBusArrivals();
+executeTrainArrivals();
 executeServiceAlerts();
 
 app
@@ -61,7 +59,7 @@ app
         res.sendFile(path.resolve(__dirname, `../../dist/${process.env.VERSION_NUMBER}/client/report.html`));
     })
 	.use(createHtml)
-    .listen(process.env.HTTP_PORT, () =>
+    .listen(process.env.HTTP_PORT, '0.0.0.0', () =>
         console.log(`Now browse to localhost:${process.env.HTTP_PORT}`)
     );
 

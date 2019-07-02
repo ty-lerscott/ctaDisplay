@@ -6,8 +6,7 @@ const getUnsplashPhoto = async (args) => {
 	try {
 		const {status, data: {urls}} = await axios.get(ENDPOINTS.getRandomPhoto(args));
 
-		var ref = database.ref("unsplash");
-		const photos = ref.child('photos');
+		var photos = database.ref("unsplash");
 
 		if (status === 200 && urls.regular) {
 			photos.push(urls.regular);

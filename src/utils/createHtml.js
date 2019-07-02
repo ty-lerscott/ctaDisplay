@@ -2,7 +2,8 @@ module.exports = (req,res,next) => {
 	let html = `<!DOCTYPE html>
 	<html>
         <head>
-            <title>CTA Tracker</title>
+			<title>CTA Tracker</title>
+			<link rel="shortcut icon" href="/assets/favicon.png" />
 		</head>
 		<body>
 			<div id="ctaDisplay"></div>

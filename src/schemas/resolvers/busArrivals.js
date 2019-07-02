@@ -7,7 +7,7 @@ module.exports = {
 	busArrivals: {
 		type: FIELDS.list(BusArrivals.type),
 		args: {
-            stopId: BusArrivals.defaultFields.id,
+            stopId: FIELDS.integer,
             route: FIELDS.integer
 		},
 		resolve: async (parent, args) => {
