@@ -15,7 +15,7 @@ const getBusArrivals = async ({
 		const ref = database.ref('arrivals');
 		const bussesRef = ref.child('busses');
 
-		if (status === 200 && !!busses.prd.length && !busses.hasOwnProperty('error')) {
+		if (status === 200 && !!busses.prd && !!busses.prd.length && !busses.hasOwnProperty('error')) {
 			bussesRef.set({
 				[stopId]: busses.prd.map(bus => ({
 					id: bus.vid,

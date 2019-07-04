@@ -1,9 +1,5 @@
-const getTrainArrivals = ({
-    stopId,
-    stationId,
-    routeCode,
-    maxResults = null
-}) => `http://lapi.transitchicago.com/api/1.0/ttarrivals.aspx?key=${process.env.API_KEY_TRAIN}&outputType=JSON${!stopId ? '&mapid=' + stationId : ''}${!stationId ? '&stpid=' + stopId : ''}${!!maxResults ? '&max=' + maxResults : ''}${!!routeCode ? '&rt=' + routeCode : ''}`;
+const getDefaultTrains = (stationId) => `http://lapi.transitchicago.com/api/1.0/ttarrivals.aspx?key=${process.env.API_KEY_TRAIN}&outputType=JSON&mapid=${stationId}&max=10`;
+const getAllTrains = () => `http://lapi.transitchicago.com/api/1.0/ttpositions.aspx?key=${process.env.API_KEY_TRAIN}&rt=red,blue,brn,g,org,p,pink,y&outputType=JSON`;
 
 const getBusStop = ({
     routeNumber,
@@ -27,8 +23,9 @@ module.exports = {
     getEvents,
     getBusStop,
     getWeather,
+    getAllTrains,
     getRandomPhoto,
     getBusArrivals,
-    getTrainArrivals,
+    getDefaultTrains,
     getServiceAlerts
 }

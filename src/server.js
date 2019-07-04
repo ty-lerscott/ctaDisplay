@@ -7,7 +7,7 @@ const compression = require('compression');
 const cors = require('cors');
 const morgan = require('morgan');
 const path = require('path');
-
+const axios = require('axios');
 dotenv.config();
 
 const app = express();
@@ -24,12 +24,12 @@ const executeBusArrivals  = require('./polling/busArrivals');
 const executeServiceAlerts= require('./polling/serviceAlerts');
 const executeTrainArrivals= require('./polling/trainArrivals');
 
-executeWeather();
-executeUnsplash();
-executeSeatGeek();
-executeBusArrivals();
+// executeWeather();
+// executeUnsplash();
+// executeSeatGeek();
+// executeBusArrivals();
 executeTrainArrivals();
-executeServiceAlerts();
+// executeServiceAlerts();
 
 app
     .use(cors({
@@ -53,11 +53,8 @@ app
             }
         }
     ))
-    .use('*/assets', express.static(path.resolve(__dirname, `../../app/assets`)))
-    .use('*/js', express.static(path.resolve(__dirname, `../../dist/${process.env.VERSION_NUMBER}/client`)))
-    .use('/report', (req,res) => {
-        res.sendFile(path.resolve(__dirname, `../../dist/${process.env.VERSION_NUMBER}/client/report.html`));
-    })
+    .use('*/assets', express.static(path.resolve(__dirname, `../../public/assets`)))
+    .use('*/js', express.static(path.resolve(__dirname, `../../public/js`)))
 	.use(createHtml)
     .listen(process.env.HTTP_PORT, '0.0.0.0', () =>
         console.log(`Now browse to localhost:${process.env.HTTP_PORT}`)

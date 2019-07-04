@@ -1,20 +1,19 @@
 const axios = require('axios');
-const ENDPOINTS = require('../endpoints');
+const {getDefaultTrains, getAllTrains} = require('../endpoints');
 const {database} = require('../../firebase/config');
 
-const getTrainArrivals = async ({
-	stationId=40540,
-	direction='south'
-} = {}) => {
+const DEFAULT_STATION_ID = 40540;
+
+const getTrainArrivals = async (args) => {
 	try {
-		const {status, data} = await axios.get(ENDPOINTS.getTrainArrivals({stationId, direction}));
+		const allTrains = await axios.get(getAllTrains());
+		const defaultTrains = await axios.get(getDefaultTrains(DEFAULT_STATION_ID));
 
-		const ref = database.ref('arrivals');
-		const trainsRef = ref.child('trains');
+		const ref = database.ref('arrivals/trains');
 
-		if (status === 200 && !!data.ctatt.eta.length) {
-			trainsRef.set({
-				[stationId]: data.ctatt.eta.map(train => ({
+		if (defaultTrains.status === 200 && !!defaultTrains.data.ctatt.eta.length) {
+			ref.child('default').set(
+				defaultTrains.data.ctatt.eta.map(train => ({
 					id: train.rn,
 					route: train.rt,
 					destination: train.destNm,
@@ -24,18 +23,33 @@ const getTrainArrivals = async ({
 					isDelayed: Number(train.isDly) === 1,
 					isPrediction: Number(train.isSch) === 1,
 					isApproaching: Number(train.isApp) === 1
-				})).filter(({direction: trainDirection}) => {
-					switch (direction) {
-						case 'north':
-							return trainDirection === 1;
-						case 'south':
-							return trainDirection === 5;
-						default:
-							return true;
-					}
-				})
+				})).filter(({direction}) => direction === 5)
+			)
+			console.warn('updated default train arrivals database')
+		}
+
+		if (allTrains.status === 200 && !!allTrains.data.ctatt.route.length) {
+			const routes = allTrains.data.ctatt.route;
+
+			routes.forEach(({train, ...route}) => {
+				const trains = train;
+				if (!!trains && !!trains.length) {
+					ref.child(`all/${[route['@name']]}`).set(
+						trains.map(train => ({
+							id: train.rn,
+							destination: train.destNm,
+							stationName: train.nextStaNm,
+							direction: Number(train.trDr),
+							predictedArrivalTime: train.arrT,
+							stationId: Number(train.nextStaId),
+							isDelayed: Number(train.isDly) === 1,
+							isApproaching: Number(train.isApp) === 1
+						}))
+					)
+				}
+
 			})
-			console.warn('updated train arrivals database')
+			console.warn('updated all train arrivals database')
 		}
 	} catch (err) {
 		console.warn('there was an error in requesting train arrivals', err)
