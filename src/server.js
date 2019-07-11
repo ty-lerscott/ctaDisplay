@@ -15,8 +15,6 @@ const app = express();
 const schema = require("./schemas/RootQuery");
 const createHtml = require('./utils/createHtml');
 
-const {database} = require('../firebase/config');
-
 const executeWeather      = require('./polling/weather');
 const executeUnsplash     = require('./polling/unsplash');
 const executeSeatGeek     = require('./polling/seatGeek');
@@ -28,7 +26,7 @@ const executeTrainArrivals= require('./polling/trainArrivals');
 // executeUnsplash();
 // executeSeatGeek();
 // executeBusArrivals();
-executeTrainArrivals();
+// executeTrainArrivals();
 // executeServiceAlerts();
 
 app

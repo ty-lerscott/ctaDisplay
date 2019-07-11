@@ -1,14 +1,35 @@
-const isSouthBound = ({mode, route, direction}) => {
-    switch(mode) {
-        case 'bus':
-            //TODO: Figure out if the bus is heading in the right direction
-            return false;
-        case 'train':
-        default:
-            return Number(direction) === 5;
-    }
-}
-
 module.exports = {
-    isSouthBound
+	red: {
+		north: 1,
+		south: 5
+	},
+	p: {
+		north: 1,
+		south: 5
+	},
+	blue: {
+		east: 5,
+		west: 1
+	},
+	brn: {
+		north: 1,
+		south: 5
+	},
+	green: {
+		east: 5,
+		south: 5,
+		west: 1
+	},
+	org: {
+		north: 1,
+		south: 5
+	},
+	pink: {
+		east: 1,
+		west: 5
+	},
+	y: {
+		north: 1,
+		south: 5
+	}
 }
