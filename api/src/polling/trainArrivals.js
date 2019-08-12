@@ -35,10 +35,10 @@ const getTrainArrivals = async ({
 					}
 				})
 			})
-			console.warn('updated train arrivals database')
+			// TODO: SAFE, non memory hogging log
 		}
 	} catch (err) {
-		console.warn('there was an error in requesting train arrivals', err)
+		// TODO: SAFE, non memory hogging log
 	}
 }
 

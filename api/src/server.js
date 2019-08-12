@@ -38,9 +38,6 @@ if (process.env.ENVIRONMENT !== 'DEVELOPMENT'){
     console.warn('NO POLLING IN DEVELOPMENT');
 }
 
-console.warn(version);
-
-
 app
     .use(cors({
         credentials: true,

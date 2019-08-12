@@ -10,10 +10,10 @@ const getUnsplashPhoto = async (args) => {
 
 		if (status === 200 && urls.regular) {
 			photos.push(urls.regular);
-			console.warn('updated unsplash database')
+			// TODO: SAFE, non memory hogging log
 		}
 	} catch (err) {
-		console.warn('there was an error in requesting unsplash', err);
+		// TODO: SAFE, non memory hogging log
 	}
 }
 

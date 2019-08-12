@@ -18,7 +18,6 @@ const updateRateLimit = async args => {
 
 		return newRate;
 	} catch (err) {
-		// console.warn(err);
 		return {
 			error: JSON.stringify(err)
 		}

@@ -24,10 +24,10 @@ const getWeather = async () => {
 				temperature: Math.floor(convert(main.temp).from('K').to('F')),
 				condition: weather.map(({main}) => main).sort().join('-').toLowerCase()
 			});
-			console.warn('updated weather database')
+			// TODO: SAFE, non memory hogging log
 		}
 	} catch ({message, ...rest}) {
-		console.warn('there was an error in requesting weather', message);
+		// TODO: SAFE, non memory hogging log
 	}
 }
 

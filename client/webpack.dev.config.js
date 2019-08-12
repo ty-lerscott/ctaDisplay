@@ -10,8 +10,6 @@ dotenv.config();
 
 const package = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../package.json'), 'utf-8'));
 
-console.warn('-----------------------------', path.resolve(__dirname, 'assets'));
-
 const alias = {
 	assets: path.resolve(__dirname, 'assets'),
 	actions: path.resolve(__dirname, 'actions'),

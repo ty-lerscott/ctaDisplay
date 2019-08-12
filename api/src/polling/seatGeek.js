@@ -17,10 +17,10 @@ const getEvents = async () => {
 					time: rest.datetime_local
 				}))
 			)
-			console.warn('updated events database')
+			// TODO: SAFE, non memory hogging log
 		}
 	} catch (err) {
-		console.warn('there was an error in requesting events', err);
+		// TODO: SAFE, non memory hogging log
 	}
 }
 

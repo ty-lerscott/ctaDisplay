@@ -40,10 +40,10 @@ const getBusArrivals = async ({
 					}
 				})
 			})
-			console.warn('updated bus arrivals database')
+			// TODO: SAFE, non memory hogging log
 		}
 	} catch (err) {
-		console.warn('there was an error in requesting bus arrivals', err);
+		// TODO: SAFE, non memory hogging log
 	}
 }
 

@@ -17,10 +17,10 @@ const getServiceAlerts = async () => {
 					impactedRoutes: (Array.isArray(alert.ImpactedService.Service) ? alert.ImpactedService.Service : [alert.ImpactedService.Service]).map(({ServiceId}) => ServiceId)
 				}))
 			)
-			console.warn('updated service alerts database')
+			// TODO: SAFE, non memory hogging log
 		}
 	} catch (err) {
-		console.warn('there was an error in requesting service alerts', err);
+		// TODO: SAFE, non memory hogging log
 	}
 
 }

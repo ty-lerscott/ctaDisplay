@@ -70,8 +70,9 @@ class Weather extends React.Component {
 			svgName += 'sun';
 		}
 
-
-		console.warn({svgName, condition})
+		if (process.env.ENVIRONMENT === 'DEVELOPMENT') {
+			console.warn({svgName, condition})
+		}
 
 		return svgName;
 	}
