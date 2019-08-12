@@ -62,6 +62,7 @@ app
                 context: {req, res}
             }
         }
+        
     ))
     .use('*/assets', express.static(path.resolve(__dirname, `../../client/assets`)))
     .use('*/js', express.static(path.resolve(__dirname, `../../dist/${version}/client`)))
