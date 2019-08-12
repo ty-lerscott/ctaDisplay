@@ -38,6 +38,8 @@ if (process.env.ENVIRONMENT !== 'DEVELOPMENT'){
     console.warn('NO POLLING IN DEVELOPMENT');
 }
 
+const accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' });
+
 app
     .use(cors({
         credentials: true,
@@ -48,7 +50,9 @@ app
     .use(bodyParser.json())
     .use(bodyParser.urlencoded({extended:true}))
     .use(compression())
-    .use(morgan(':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] :response-time ms'))
+    .use(morgan('combined', {
+        stream: accessLogStream
+    }))
     .use('/playground', expressPlayground({ endpoint: "/graphql" }))
     .use("/graphql",
         bodyParser.json(),
