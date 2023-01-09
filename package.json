@@ -28,7 +28,7 @@
     "express": "^4.16.4",
     "express-graphql": "^0.7.1",
     "file-loader": "^4.2.0",
-    "firebase-admin": "^8.2.0",
+    "firebase-admin": "^11.4.1",
     "fs": "0.0.1-security",
     "graphql": "^14.1.1",
     "graphql-bigint": "^1.0.0",
